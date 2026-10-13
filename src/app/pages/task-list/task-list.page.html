@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center ion-title-bold">Mis Tareas</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleReorder()">
+        <ion-icon
+          slot="icon-only"
+          [name]="reorderEnabled ? 'checkmark-outline' : 'reorder-three-outline'">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-input
+      type="text"
+      placeholder="Nueva Tarea"
+      name="task"
+      [(ngModel)]="task"
+      (keyup.enter)="addTask()">
+    </ion-input>
+
+    <ion-button slot="end" (click)="addTask()" [disabled]="!task.trim()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  @if (tasks.length === 0) {
+    <ion-label class="ion-text-center" style="display: block; margin-top: 20px;">
+      No hay tareas pendientes
+    </ion-label>
+  } @else {
+    <ion-list>
+      <ion-reorder-group
+        [disabled]="!reorderEnabled"
+        (ionReorderEnd)="handleReorder($event)">
+
+        @for (task of tasks; track task) {
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>{{ task }}</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="confirmDeleteTask(task)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        }
+      </ion-reorder-group>
+    </ion-list>
+  }
+</ion-content>
