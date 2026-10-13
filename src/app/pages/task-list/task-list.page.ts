@@ -1,9 +1,10 @@
 // ===================== IMPORTACIONES DE ANGULAR =====================
 
 // Component: decorador para definir un componente.
+// OnInit: interfaz para ejecutar código cuando el componente se inicia.
 // ChangeDetectorRef: permite controlar manualmente la detección de cambios (actualizar la vista).
 // inject: función moderna para inyectar dependencias sin usar el constructor.
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 
 // CommonModule: trae directivas comunes de Angular (*ngIf, *ngFor, pipes, etc.).
 import { CommonModule } from '@angular/common';
@@ -83,7 +84,7 @@ const STORAGE_KEY = 'tasks';
     IonReorderGroup,
   ],
 })
-export class TaskListPage {
+export class TaskListPage implements OnInit {
   // Inyecta el detector de cambios para forzar la actualización de la vista.
   private cdr = inject(ChangeDetectorRef);
 
@@ -108,6 +109,10 @@ export class TaskListPage {
       checkmarkOutline,
     });
   }
+
+  // Se ejecuta automáticamente al iniciar el componente.
+  // Se deja vacío a propósito: las tareas se cargan en ionViewWillEnter.
+  ngOnInit() {}
 
   // Evento del ciclo de vida de Ionic: se ejecuta cada vez que la página va a mostrarse.
   // No necesita implementar ninguna interfaz, Ionic lo detecta por el nombre.
