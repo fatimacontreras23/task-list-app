@@ -4,7 +4,7 @@
 // OnInit: interfaz para ejecutar código cuando el componente se inicia.
 // ChangeDetectorRef: permite controlar manualmente la detección de cambios (actualizar la vista).
 // inject: función moderna para inyectar dependencias sin usar el constructor.
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 
 // CommonModule: trae directivas comunes de Angular (*ngIf, *ngFor, pipes, etc.).
 import { CommonModule } from '@angular/common';
@@ -84,7 +84,7 @@ const STORAGE_KEY = 'tasks';
     IonReorderGroup,
   ],
 })
-export class TaskListPage implements OnInit {
+export class TaskListPage  {
   // Inyecta el detector de cambios para forzar la actualización de la vista.
   private cdr = inject(ChangeDetectorRef);
 
@@ -112,7 +112,7 @@ export class TaskListPage implements OnInit {
 
   // Se ejecuta automáticamente al iniciar el componente.
   // Se deja vacío a propósito: las tareas se cargan en ionViewWillEnter.
-  ngOnInit() {}
+  
 
   // Evento del ciclo de vida de Ionic: se ejecuta cada vez que la página va a mostrarse.
   // No necesita implementar ninguna interfaz, Ionic lo detecta por el nombre.
@@ -205,8 +205,8 @@ export class TaskListPage implements OnInit {
   // Guarda el arreglo de tareas con Preferences.
   // JSON.stringify convierte el arreglo a texto, porque Preferences solo guarda strings.
   // Es "async" porque Preferences.set devuelve una promesa.
-  private async saveTasks() {
-    await Preferences.set({
+      saveTasks() {
+      Preferences.set({
       key: STORAGE_KEY,
       value: JSON.stringify(this.tasks),
     });
